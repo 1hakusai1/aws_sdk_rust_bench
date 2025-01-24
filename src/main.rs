@@ -12,6 +12,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .iter()
         .filter_map(|o| o.key())
         .collect::<Vec<_>>();
-    dbg!(file_names);
+    println!("{:?}", file_names);
     Ok(())
 }
