@@ -1,0 +1,13 @@
+#/bin/bash
+
+set -eu
+
+bucket=hakusai-test-bucket
+n=100
+
+for i in $(seq $n); do
+    tmpfile=$(mktemp)
+    echo $i > $tmpfile
+    aws s3 cp $tmpfile s3://$bucket/$i.txt
+    rm $tmpfile
+done
