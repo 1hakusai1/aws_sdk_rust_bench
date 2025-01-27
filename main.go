@@ -28,7 +28,9 @@ func main() {
 		return
 	}
 	s3Client := s3.NewFromConfig(sdkConfig)
-	result, err := s3Client.ListObjectsV2(ctx, &s3.ListObjectsV2Input{Bucket: &bucket})
+	configLoaded := time.Since(start)
+	fmt.Printf("load config %s\n", configLoaded)
+	_, err = s3Client.ListObjectsV2(ctx, &s3.ListObjectsV2Input{Bucket: &bucket})
 	if err != nil {
 		var ae smithy.APIError
 		if errors.As(err, &ae) && ae.ErrorCode() == "AccessDenied" {
@@ -38,7 +40,6 @@ func main() {
 		}
 		return
 	}
-	fmt.Println(result)
-	elapsed := time.Since(start)
-	fmt.Printf("Binomial took %s", elapsed)
+	requestSent := time.Since(start)
+	fmt.Printf("request sent %d\n", requestSent-configLoaded)
 }
