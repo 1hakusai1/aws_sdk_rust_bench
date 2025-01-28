@@ -1,11 +1,19 @@
-use std::{env, error::Error, time::Instant};
+use std::{error::Error, time::Instant};
+
+use aws_config::BehaviorVersion;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     let start = Instant::now();
-    let mut args = env::args();
-    let bucket = args.nth(1).ok_or("Specify a bucket name")?;
-    let config = aws_config::load_from_env().await;
+
+    let profile = "hakusai";
+    let bucket = "hakusai-test-bucket";
+
+    let config = aws_config::ConfigLoader::default()
+        .behavior_version(BehaviorVersion::latest())
+        .profile_name(profile)
+        .load()
+        .await;
     let config_loaded = start.elapsed();
     println!("{:?}", config_loaded);
     let client = aws_sdk_s3::Client::new(&config);

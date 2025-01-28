@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -19,9 +18,11 @@ import (
 func main() {
 	start := time.Now()
 
-	bucket := os.Args[1]
+	profile := "hakusai"
+	bucket := "hakusai-test-bucket"
+
 	ctx := context.Background()
-	sdkConfig, err := config.LoadDefaultConfig(ctx)
+	sdkConfig, err := config.LoadDefaultConfig(ctx, config.WithSharedConfigProfile(profile))
 	if err != nil {
 		fmt.Println("Couldn't load default configuration. Have you set up your AWS account?")
 		fmt.Println(err)
