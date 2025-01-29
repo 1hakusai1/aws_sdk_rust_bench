@@ -2,21 +2,16 @@
 
 
 ```
-hyperfine --warmup=3 'aws s3 ls s3://hakusai-test-bucket' './target/release/aws_sdk_rust_bench hakusai-test-bucket' './awslim-s3 s3 listObjectsV2 --bucket hakusai-test-bucket  '
-Benchmark 1: aws s3 ls s3://hakusai-test-bucket
-  Time (mean ± σ):     454.6 ms ±  11.3 ms    [User: 322.1 ms, System: 58.5 ms]
-  Range (min … max):   439.6 ms … 473.7 ms    10 runs
+> hyperfine --warmup=3 './target/release/aws_sdk_rust_bench' './gos3'
+Benchmark 1: ./target/release/aws_sdk_rust_bench
+  Time (mean ± σ):      94.9 ms ±   9.0 ms    [User: 8.7 ms, System: 9.6 ms]
+  Range (min … max):    74.6 ms … 108.0 ms    30 runs
  
-Benchmark 2: ./target/release/aws_sdk_rust_bench hakusai-test-bucket
-  Time (mean ± σ):     187.1 ms ±   6.1 ms    [User: 83.0 ms, System: 8.8 ms]
-  Range (min … max):   179.5 ms … 198.6 ms    14 runs
- 
-Benchmark 3: ./awslim-s3 s3 listObjectsV2 --bucket hakusai-test-bucket  
-  Time (mean ± σ):      80.8 ms ±   5.8 ms    [User: 11.0 ms, System: 9.1 ms]
-  Range (min … max):    66.1 ms …  94.1 ms    38 runs
+Benchmark 2: ./gos3
+  Time (mean ± σ):      79.3 ms ±   8.3 ms    [User: 9.1 ms, System: 8.1 ms]
+  Range (min … max):    67.0 ms … 102.5 ms    40 runs
  
 Summary
-  ./awslim-s3 s3 listObjectsV2 --bucket hakusai-test-bucket   ran
-    2.32 ± 0.18 times faster than ./target/release/aws_sdk_rust_bench hakusai-test-bucket
-    5.63 ± 0.43 times faster than aws s3 ls s3://hakusai-test-bucket
+  ./gos3 ran
+    1.20 ± 0.17 times faster than ./target/release/aws_sdk_rust_bench
 ```
